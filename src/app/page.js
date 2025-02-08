@@ -275,23 +275,31 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editingId) {
-      try {
-        await axios.put(`${BASE_URL}/contacts/update/${editingId}`, formData);
-        resetForm();
-      } catch (error) {
-        console.error("Error updating contact:", error);
-      }
-    } else {
-      try {
-        await axios.post(`${BASE_URL}/contacts`, { ...formData, user_id: user.id });
-        resetForm();
-      } catch (error) {
-        console.error("Error adding contact:", error);
-      }
+    const token = localStorage.getItem("token"); // ✅ Get token from localStorage
+    
+    if (!token) {
+        console.error("No token found. User not authenticated.");
+        return;
     }
-    fetchContacts(user.id);
-  };
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`, // ✅ Attach token in headers
+        },
+    };
+
+    try {
+        if (editingId) {
+            await axios.put(`${BASE_URL}/contacts/update/${editingId}`, formData, config);
+        } else {
+            await axios.post(`${BASE_URL}/contacts`, { ...formData, user_id: user.id }, config);
+        }
+        resetForm();
+        fetchContacts(user.id);
+    } catch (error) {
+        console.error("Error saving contact:", error);
+    }
+};
 
   const confirmDelete = (contactId) => {
     setDeleteId(contactId);
