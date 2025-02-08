@@ -197,7 +197,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const BASE_URL = "https://contacts-api.onrender.com"; // ✅ Updated API base URL
+const BASE_URL = "https://contact-backend-9oih.onrender.com"; // ✅ Updated API base URL
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
