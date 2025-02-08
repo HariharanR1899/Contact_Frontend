@@ -220,8 +220,9 @@ export default function Home() {
       router.push("/login"); // Redirect if not logged in
       return;
     }
-    setUser(storedUser);
-    fetchContacts(storedUser.id);
+    const userData = JSON.parse(storedUser);
+    setUser(userData);
+    fetchContacts(userData.id);
   }, []);
 
   const fetchContacts = async (userId) => {
