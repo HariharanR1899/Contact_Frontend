@@ -14,7 +14,7 @@ export default function Login() {
     try {
       const response = await axios.post(`${BASE_URL}/login`, formData);
       localStorage.setItem("token", response.data.token);
-      router.push("/contacts");
+      window.location.href = "/"; 
     } catch (error) {
       console.error("Login failed:", error);
       alert("Invalid credentials. Please try again.");
