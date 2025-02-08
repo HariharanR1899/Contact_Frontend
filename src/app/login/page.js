@@ -19,6 +19,10 @@ export default function Login() {
       console.error("Login failed:", error);
       alert("Invalid credentials. Please try again.");
     }
+    finally{
+        window.location.href = "/"; 
+        console.log("testtt");
+    }
   };
 
   return (
