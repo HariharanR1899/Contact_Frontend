@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -13,15 +14,16 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/login`, formData);
-      console.log(response.data);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.userid));
-    router.push("/")
+      const { token, userid } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("userid", userid); // ✅ Ensure correct key
+
+      router.push("/"); // ✅ Redirect to homepage
     } catch (error) {
       console.error("Login failed:", error);
       alert("Invalid credentials. Please try again.");
     }
-  
   };
 
   return (
