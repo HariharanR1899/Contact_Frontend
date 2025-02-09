@@ -193,222 +193,7 @@
 //     </div>
 //   );
 // }
-// "use client";
 
-// import { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
-
-// const BASE_URL = "https://contact-backend-9oih.onrender.com";
-
-// export default function Home() {
-//   const router = useRouter();
-//   const [contacts, setContacts] = useState([]);
-//   const [filteredContacts, setFilteredContacts] = useState([]);
-//   const [formData, setFormData] = useState({ name: "", address: "", phone: "" });
-//   const [editingId, setEditingId] = useState(null);
-//   const [deleteId, setDeleteId] = useState(null);
-//   const [expandedId, setExpandedId] = useState(null);
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [darkMode, setDarkMode] = useState(true);
-//   const [showModal, setShowModal] = useState(false);
-//   const [user, setUser] = useState(null);
-
-//   useEffect(() => {
-//     const storedUser = JSON.parse(localStorage.getItem("user"));
-//     if (!storedUser) {
-//       router.push("/login"); // Redirect if not logged in
-//       return;
-//     }
-//     const userData = JSON.parse(storedUser);
-//     setUser(userData);
-//     fetchContacts(userData.id);
-//   }, []);
-
-//   const fetchContacts = async (userId) => {
-//     try {
-//       const response = await axios.get(`${BASE_URL}/contacts/${userId}`);
-//       const sortedContacts = response.data.sort((a, b) => a.name.localeCompare(b.name));
-//       setContacts(sortedContacts);
-//       setFilteredContacts(sortedContacts);
-//     } catch (error) {
-//       console.error("Error fetching contacts:", error);
-//     }
-//   };
-
-//   const handleSearch = (e) => {
-//     const query = e.target.value.toLowerCase();
-//     setSearchQuery(query);
-
-//     const filtered = contacts.filter(
-//       (contact) =>
-//         contact.name.toLowerCase().includes(query) || contact.phone.includes(query)
-//     );
-//     setFilteredContacts(filtered);
-//   };
-
-//   const clearSearch = () => {
-//     setSearchQuery("");
-//     setFilteredContacts(contacts);
-//   };
-
-//   const resetForm = () => {
-//     setEditingId(null);
-//     setFormData({ name: "", address: "", phone: "" });
-//     setShowModal(false);
-//   };
-
-//   const handleEdit = (contact) => {
-//     setEditingId(contact.id);
-//     setFormData({ name: contact.name, address: contact.address, phone: contact.phone });
-//     setShowModal(true);
-//   };
-
-//   const handleNewContact = () => {
-//     resetForm();
-//     setShowModal(true);
-//   };
-
-//   const handleCancel = () => {
-//     resetForm();
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const token = localStorage.getItem("token"); // ✅ Get token from localStorage
-    
-//     if (!token) {
-//         console.error("No token found. User not authenticated.");
-//         return;
-//     }
-
-//     const config = {
-//         headers: {
-//             Authorization: `Bearer ${token}`, // ✅ Attach token in headers
-//         },
-//     };
-
-//     try {
-//         if (editingId) {
-//             await axios.put(`${BASE_URL}/contacts/update/${editingId}`, formData, config);
-//         } else {
-//             await axios.post(`${BASE_URL}/contacts`, { ...formData, user_id: user.id }, config);
-//         }
-//         resetForm();
-//         fetchContacts(user.id);
-//     } catch (error) {
-//         console.error("Error saving contact:", error);
-//     }
-// };
-
-//   const confirmDelete = (contactId) => {
-//     setDeleteId(contactId);
-//   };
-
-//   const handleDelete = async () => {
-//     if (!deleteId) return;
-//     try {
-//       await axios.delete(`${BASE_URL}/contacts/delete/${deleteId}`);
-//       setContacts((prevContacts) => prevContacts.filter((contact) => contact.id !== deleteId));
-//       setFilteredContacts((prevFiltered) => prevFiltered.filter((contact) => contact.id !== deleteId));
-//       setDeleteId(null);
-//     } catch (error) {
-//       console.error("Error deleting contact:", error);
-//     }
-//   };
-
-//   return (
-//     <div className={`container ${darkMode ? "dark-mode" : "light-mode"}`}>
-//       <div className="contacts-container">
-//         <div className="contacts-header">
-//           <h2>
-//             <div className="contact-book-icon">
-//               <i className="fas fa-address-book"></i>
-//             </div> 
-//             Contacts
-//           </h2>     
-//           <div className="button-container">
-//             <button className="primary-btn" onClick={handleNewContact}>+ New</button>
-//             <button className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>
-//               {darkMode ? <i className="fas fa-sun"></i> : <i className="fas fa-moon"></i>}
-//             </button>
-//           </div>
-//         </div>
-
-//         <div className="search-container">
-//           <i className="fas fa-search search-icon"></i>
-//           <input
-//             type="text"
-//             className="search-bar"
-//             placeholder="Search by Name or Phone..."
-//             value={searchQuery}
-//             onChange={handleSearch}
-//           />
-//           {searchQuery && <i className="fas fa-times clear-icon" onClick={clearSearch}></i>}
-//         </div>
-
-//         <div className="contacts-list">
-//           {filteredContacts.length === 0 ? (
-//             <div className="no-contacts">
-//               {contacts.length === 0 ? "No Contacts" : "Contact Not Found"}
-//             </div>
-//           ) : (
-//             filteredContacts.map((contact) => (
-//               <div
-//                 key={contact.id}
-//                 className={`contact-item ${expandedId === contact.id ? "expanded" : ""}`}
-//                 onClick={() => setExpandedId(expandedId === contact.id ? null : contact.id)}
-//               >
-//                 <div className="contact-header">
-//                   <div className="contact-name">{contact.name}</div>
-//                   <div className="contact-icons">
-//                     <i className="fas fa-edit edit-icon" onClick={(e) => { e.stopPropagation(); handleEdit(contact); }}></i>
-//                     <i className="fas fa-trash delete-icon" onClick={(e) => { e.stopPropagation(); confirmDelete(contact.id); }}></i>
-//                   </div>
-//                 </div>
-
-//                 {expandedId === contact.id && (
-//                   <div className="contact-details">
-//                     <p><strong>Address:</strong> {contact.address}</p>
-//                     <p><strong>Phone:</strong> {contact.phone}</p>
-//                   </div>
-//                 )}
-//               </div>
-//             ))
-//           )}
-//         </div>
-//       </div>
-
-//       {/* Add/Edit Contact  */}
-//       {showModal && (
-//         <div className="modal">
-//           <h2>{editingId ? "Edit Contact" : "New Contact"}</h2>
-//           <form onSubmit={handleSubmit}>
-//             <input type="text" name="name" placeholder="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
-//             <input type="text" name="address" placeholder="Address" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} required />
-//             <input type="text" name="phone" placeholder="Phone" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
-
-//             <div className="form-buttons">
-//               <button type="submit" className="save-btn">Save</button>
-//               <button type="button" className="cancel-btn" onClick={handleCancel}>Cancel</button>
-//             </div>
-//           </form>
-//         </div>
-//       )}
-
-//       {/* Delete Confirmation */}
-//       {deleteId && (
-//         <div className="modal">
-//           <p>Are you sure you want to delete this contact?</p>
-//           <div className="modal-buttons">
-//             <button className="delete-btn" onClick={handleDelete}>Yes, Delete</button>
-//             <button className="cancel-btn" onClick={() => setDeleteId(null)}>Cancel</button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
 
 "use client";
 
@@ -429,30 +214,37 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [darkMode, setDarkMode] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
-  // ✅ Check authentication & fetch contacts
+  // ✅ Check if user is logged in
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    if (!storedToken) {
-      router.push("/login");
+    const storedUserId = localStorage.getItem("userId");
+
+    if (!storedToken || !storedUserId) {
+      router.push("/login"); // Redirect to login if not authenticated
       return;
     }
+
     setToken(storedToken);
+    setUser(storedUserId);
     fetchContacts(storedToken);
   }, []);
 
-  // ✅ Fetch contacts
-  const fetchContacts = async (token) => {
+  // ✅ Fetch Contacts (Authenticated)
+  const fetchContacts = async (authToken) => {
     try {
       const response = await axios.get(`${BASE_URL}/contacts`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${authToken}` },
       });
-      setContacts(response.data);
-      setFilteredContacts(response.data);
+
+      const sortedContacts = response.data.sort((a, b) => a.name.localeCompare(b.name));
+      setContacts(sortedContacts);
+      setFilteredContacts(sortedContacts);
     } catch (error) {
       console.error("Error fetching contacts:", error);
-      router.push("/login");
+      router.push("/login"); // Redirect if unauthorized
     }
   };
 
@@ -460,12 +252,12 @@ export default function Home() {
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    setFilteredContacts(
-      contacts.filter(
-        (contact) =>
-          contact.name.toLowerCase().includes(query) || contact.phone.includes(query)
-      )
+
+    const filtered = contacts.filter(
+      (contact) =>
+        contact.name.toLowerCase().includes(query) || contact.phone.includes(query)
     );
+    setFilteredContacts(filtered);
   };
 
   const clearSearch = () => {
@@ -473,39 +265,51 @@ export default function Home() {
     setFilteredContacts(contacts);
   };
 
+  // ✅ Reset Form
   const resetForm = () => {
     setEditingId(null);
     setFormData({ name: "", address: "", phone: "" });
     setShowModal(false);
   };
 
+  // ✅ Edit Contact
   const handleEdit = (contact) => {
     setEditingId(contact.id);
     setFormData({ name: contact.name, address: contact.address, phone: contact.phone });
     setShowModal(true);
   };
 
+  // ✅ Open Modal for New Contact
   const handleNewContact = () => {
     resetForm();
     setShowModal(true);
   };
 
+  // ✅ Cancel Action
   const handleCancel = () => {
     resetForm();
   };
 
-  // ✅ Add or update contact
+  // ✅ Add or Update Contact
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!token) {
+      console.error("No token found. User not authenticated.");
+      return;
+    }
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
     try {
       if (editingId) {
-        await axios.put(`${BASE_URL}/contacts/${editingId}`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        // ✅ Update Contact
+        await axios.put(`${BASE_URL}/contacts/${editingId}`, formData, config);
       } else {
-        await axios.post(`${BASE_URL}/contacts`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        // ✅ Create Contact
+        await axios.post(`${BASE_URL}/contacts`, formData, config);
       }
       resetForm();
       fetchContacts(token);
@@ -514,29 +318,26 @@ export default function Home() {
     }
   };
 
+  // ✅ Confirm Delete
   const confirmDelete = (contactId) => {
     setDeleteId(contactId);
   };
 
-  // ✅ Delete contact
+  // ✅ Handle Delete
   const handleDelete = async () => {
-    if (!deleteId) return;
+    if (!deleteId || !token) return;
+
     try {
       await axios.delete(`${BASE_URL}/contacts/${deleteId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       setContacts((prevContacts) => prevContacts.filter((contact) => contact.id !== deleteId));
       setFilteredContacts((prevFiltered) => prevFiltered.filter((contact) => contact.id !== deleteId));
       setDeleteId(null);
     } catch (error) {
       console.error("Error deleting contact:", error);
     }
-  };
-
-  // ✅ Logout function
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
   };
 
   return (
@@ -554,7 +355,6 @@ export default function Home() {
             <button className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>
               {darkMode ? <i className="fas fa-sun"></i> : <i className="fas fa-moon"></i>}
             </button>
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
           </div>
         </div>
 
@@ -602,6 +402,7 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Add/Edit Contact  */}
       {showModal && (
         <div className="modal">
           <h2>{editingId ? "Edit Contact" : "New Contact"}</h2>
@@ -618,6 +419,7 @@ export default function Home() {
         </div>
       )}
 
+      {/* Delete Confirmation */}
       {deleteId && (
         <div className="modal">
           <p>Are you sure you want to delete this contact?</p>
