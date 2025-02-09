@@ -220,7 +220,7 @@ export default function Home() {
   // ✅ Check if user is logged in
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    const storedUserId = localStorage.getItem("userId");
+    const storedUserId = localStorage.getItem("userid");
 
     if (!storedToken || !storedUserId) {
       router.push("/login"); // Redirect to login if not authenticated
