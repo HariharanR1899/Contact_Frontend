@@ -1,0 +1,207 @@
+.authContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #121212; /* Dark background */
+    color: #fff; /* White text */
+  }
+  
+  .authTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .googleLogin {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .googleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .googleBtn:hover {
+    background-color: #ddd;
+  }
+  
+  .googleBtn i {
+    margin-right: 8px;
+  }
+  
+  .authForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .authInput {
+    width: 300px;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s ease;
+  }
+  
+  .authInput:focus {
+    border: 1px solid #bbb;
+  }
+  
+  .authButton {
+    width: 320px;
+    padding: 12px;
+    background-color: #6d28d9; /* Purple */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .authButton:hover {
+    background-color: #5b21b6;
+  }
+  
+  .otpMessage {
+    color: #4fc3f7;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .errorText {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .backButton {
+    width: 320px;
+    padding: 12px;
+    background-color: #666;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .backButton:hover {
+    background-color: #555;
+  }
+  
+  .authText {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .authLink {
+    color: #a78bfa; /* Light Purple */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .authLink:hover {
+    text-decoration: underline;
+  }
+
+  .otpMessage {
+    color:#6d28d9; /* Blue text for OTP message */
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .successMessage {
+    color: #10b981; /* Green for success message */
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+
+  .backButton {
+    width: 320px;
+    padding: 12px;
+    background-color: #444; /* Grey color */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .backButton:hover {
+    background-color: #333;
+  }
+
+  .forgotPassword {
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer; /* ✅ Ensure cursor changes to pointer */
+    color: #bbb;
+   
+    display: inline-block; /* ✅ Makes it behave like a clickable element */
+  }
+  
+  .forgotPassword:hover {
+    text-decoration: underline;
+    color: #fff;
+  }
+
+  .successMessage {
+    color: #4ade80; /* ✅ Green text */
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .contactBookIcon {
+    display: flex;
+    justify-content: center;
+    font-size: 100px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #a855f7, #8b5cf6, #e54fff, #6d28d9);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: waveAnimation 6s infinite ease-in-out;
+    margin-bottom: 10px;
+  }
+  
+  @keyframes waveAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
