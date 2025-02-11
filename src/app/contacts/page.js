@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const BASE_URL = "http://localhost:5001";
+const BASE_URL = "https://contact-backend-9oih.onrender.com";
 
 export default function Contacts() {
   const router = useRouter();
