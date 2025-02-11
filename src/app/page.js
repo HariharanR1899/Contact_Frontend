@@ -405,7 +405,15 @@ const [loginError, setLoginError] = useState("");
   if (token && userid) {
     localStorage.setItem("token", token);
     localStorage.setItem("userid", userid);
-    router.replace("/contacts"); // ✅ Ensure navigation after login
+
+    // Remove query parameters after storing the token
+    router.replace("/contacts");
+  } else {
+    // If no token is found, redirect to login
+    const existingToken = localStorage.getItem("token");
+    if (!existingToken) {
+      router.replace("/");
+    }
   }
     // ✅ Get success messages from localStorage
     const resetSuccessMessage = localStorage.getItem("resetSuccess");
