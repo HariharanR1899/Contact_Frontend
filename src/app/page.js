@@ -394,14 +394,16 @@ export default function Login() {
   const [resetSuccess, setResetSuccess] = useState("");
 const [signupSuccess, setSignupSuccess] = useState("");
 const [loginError, setLoginError] = useState("");
-
+const [errorMessage, setErrorMessage] = useState("");
   // ✅ Handle Google Login Redirection
   useEffect(() => {
 
     const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
   const userid = urlParams.get("userid");
-
+  if (urlParams.get("error") === "NoAccount") {
+    setErrorMessage("No account found. Please sign up first.");
+  }
   if (token && userid) {
     localStorage.setItem("token", token);
     localStorage.setItem("userid", userid);
@@ -560,6 +562,7 @@ const [loginError, setLoginError] = useState("");
     <i className="fa-brands fa-google"></i> Sign in with Google
   </a>
 </div>
+{errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 <div className={styles.divider}>
         <span>OR</span>
       </div>
