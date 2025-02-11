@@ -41,7 +41,7 @@ export default function Contacts() {
       setFilteredContacts(sortedContacts);
     } catch (error) {
       console.error("Error fetching contacts:", error);
-      router.push("/login");
+      router.push("/contacts");
     }
   };
 
