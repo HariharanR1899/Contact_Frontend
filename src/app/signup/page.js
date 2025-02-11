@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import styles from "../auth.module.css"; // ✅ Import CSS
 
-const BASE_URL = "http://localhost:5001";
+const BASE_URL = "https://contact-backend-9oih.onrender.com";
 
 export default function Signup() {
   const router = useRouter();
