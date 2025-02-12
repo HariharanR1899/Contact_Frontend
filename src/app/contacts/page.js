@@ -246,7 +246,11 @@ export default function Contacts() {
         localStorage.removeItem("token"); // ✅ Remove Token
         localStorage.removeItem("userid"); // ✅ Remove User ID
         setShowLogoutModal(false);
-        window.location.href = "/"; // ✅ Redirect to Login
+        router.replace("/"); // ✅ Redirect to login
+
+  setTimeout(() => {
+    window.location.reload(); // ✅ Force full refresh to prevent cached pages
+  }, 100);
       }}>
         Yes, Log Out
       </button>
