@@ -403,9 +403,14 @@ const [errorMessage, setErrorMessage] = useState("");
   const userid = urlParams.get("userid");
   const error = urlParams.get("error");
   const redirectPage = localStorage.getItem("redirect") || "/contacts"; // ✅ Default to /contacts
-
+  if (urlParams.get("success") === "SignedUp") {
+    setSignupSuccess("Signup successful! Please log in.");
+  }
   if (error === "NoAccount") {
     setErrorMessage("No account found. Please sign up first.");
+  }
+  if (urlParams.get("error") === "AlreadyExists") {
+    setErrorMessage("Account already exists. Please log in.");
   }
 
   if (token && userid) {
