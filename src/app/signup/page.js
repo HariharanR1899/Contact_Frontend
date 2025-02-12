@@ -19,13 +19,21 @@ export default function Signup() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("error") === "AccountExists") {
+    const errorParam = urlParams.get("error");
+    const signupSuccess = urlParams.get("signupSuccess");
+  
+    if (errorParam === "AlreadyExists") { 
       setErrorMessage("Account already exists. Please log in.");
     }
-    if (urlParams.get("signupSuccess") === "true") {
+  
+    if (signupSuccess === "true") {
       setOtpMessage("Signup successful! Please log in.");
     }
-  },[router.asPath]);
+  
+    // ✅ Remove error from URL after showing message
+    const newUrl = window.location.pathname;
+    window.history.replaceState(null, "", newUrl); 
+  }, [window.location.search]);
   // ✅ Handle OTP Send
   const handleSendOTP = async () => {
     try {
@@ -67,7 +75,7 @@ export default function Signup() {
             <i className="fa-brands fa-google"></i> Sign up with Google
           </a>
         </div>
-        {errorMessage && <p className={styles.errorText}>{errorMessage}</p>}
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         <div className={styles.divider}>
         <span>OR</span>
       </div>
