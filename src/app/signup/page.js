@@ -25,7 +25,7 @@ export default function Signup() {
     if (urlParams.get("signupSuccess") === "true") {
       setOtpMessage("Signup successful! Please log in.");
     }
-  }, []);
+  },[router.asPath]);
   // ✅ Handle OTP Send
   const handleSendOTP = async () => {
     try {
@@ -67,6 +67,7 @@ export default function Signup() {
             <i className="fa-brands fa-google"></i> Sign up with Google
           </a>
         </div>
+        {errorMessage && <p className={styles.errorText}>{errorMessage}</p>}
         <div className={styles.divider}>
         <span>OR</span>
       </div>
