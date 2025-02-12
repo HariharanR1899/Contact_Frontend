@@ -75,7 +75,7 @@ export default function Signup() {
             <i className="fa-brands fa-google"></i> Sign up with Google
           </a>
         </div>
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+       
         <div className={styles.divider}>
         <span>OR</span>
       </div>
