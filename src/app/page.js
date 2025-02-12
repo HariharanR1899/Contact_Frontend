@@ -401,6 +401,18 @@ const [errorMessage, setErrorMessage] = useState("");
     const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
   const userid = urlParams.get("userid");
+  const error = urlParams.get("error");
+  const redirectPage = localStorage.getItem("redirect") || "/contacts"; // ✅ Default to /contacts
+
+  if (error === "NoAccount") {
+    setErrorMessage("No account found. Please sign up first.");
+  }
+
+  if (token && userid) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("userid", userid);
+   
+  }
   if (urlParams.get("error") === "NoAccount") {
     setErrorMessage("No account found. Please sign up first.");
   }
@@ -409,7 +421,8 @@ const [errorMessage, setErrorMessage] = useState("");
     localStorage.setItem("userid", userid);
 
     // Remove query parameters after storing the token
-    router.replace("/contacts");
+    localStorage.removeItem("redirect"); // ✅ Clear redirect after use
+    router.replace(redirectPage); // ✅ Redirect to intended page
   } else {
     // If no token is found, redirect to login
     const existingToken = localStorage.getItem("token");
@@ -555,7 +568,7 @@ const [errorMessage, setErrorMessage] = useState("");
          {/* ✅ Google Login */}
 <div className={styles.googleLogin}>
   <a
-    href={`${BASE_URL}/auth/google`}
+    href={`${BASE_URL}/auth/google/login`}
     className={styles.googleBtn}
     onClick={() => localStorage.setItem("redirect", "contacts")} // ✅ Store intended route
   >

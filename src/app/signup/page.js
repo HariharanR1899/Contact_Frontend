@@ -16,6 +16,16 @@ export default function Signup() {
   const [otpMessage, setOtpMessage] = useState(""); // ✅ Store OTP Sent Message
   const [errorMessage, setErrorMessage] = useState(""); // ✅ Store Error Messages
 
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("error") === "AccountExists") {
+      setErrorMessage("Account already exists. Please log in.");
+    }
+    if (urlParams.get("signupSuccess") === "true") {
+      setOtpMessage("Signup successful! Please log in.");
+    }
+  }, []);
   // ✅ Handle OTP Send
   const handleSendOTP = async () => {
     try {
@@ -53,7 +63,7 @@ export default function Signup() {
       {!otpSent && (
         <> 
         <div className={styles.googleLogin}>
-          <a href={`${BASE_URL}/auth/google`} className={styles.googleBtn}>
+          <a href={`${BASE_URL}/auth/google/signup`} className={styles.googleBtn}>
             <i className="fa-brands fa-google"></i> Sign up with Google
           </a>
         </div>
